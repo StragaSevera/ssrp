@@ -1,5 +1,15 @@
+export enum ComponentType {
+  Empty = 'Empty',
+  UraniumCellSingle = 'UraniumCellSingle',
+  HeatVent = 'HeatVent'
+}
+
+interface Component {
+  type: ComponentType;
+}
+
 export class Reactor {
-  public grid: object[][] = [];
+  public grid: Component[][] = [];
   public readonly gridRows = 6;
   public readonly defaultGridCols = 3;
   public gridCols: number;
@@ -9,7 +19,7 @@ export class Reactor {
     for (let i = 0; i < this.gridRows; i++) {
       this.grid[i] = [];
       for (let j = 0; j < this.gridCols; j++) {
-        this.grid[i][j] = {};
+        this.grid[i][j] = { type: ComponentType.Empty };
       }
     }
   }
