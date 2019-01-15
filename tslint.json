@@ -15,6 +15,8 @@
       true,
       { "ignore-pattern": "^_" }
     ],
-    "interface-name": false
+    "interface-name": true,
+    "ordered-imports": false,
+    "member-ordering": false
   }
 }
