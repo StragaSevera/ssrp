@@ -10,6 +10,10 @@
     ]
   },
   "rules": {
-    "space-before-function-paren": false
+    "space-before-function-paren": false,
+    "no-unused-variable": [
+      true,
+      { "ignore-pattern": "^_" }
+    ]
   }
 }
