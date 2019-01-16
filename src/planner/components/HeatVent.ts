@@ -1,6 +1,7 @@
 import { ComponentType } from '../ComponentType';
-import { IComponent } from '../IComponent';
+import { Component } from '../Component';
 
-export class HeatVent implements IComponent {
+export class HeatVent extends Component {
   public type = ComponentType.HeatVent;
+  public tick: () => void;
 }

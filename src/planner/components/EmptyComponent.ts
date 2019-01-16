@@ -1,6 +1,8 @@
 import { ComponentType } from '../ComponentType';
-import { IComponent } from '../IComponent';
+import { Component } from '../Component';
 
-export class EmptyComponent implements IComponent {
+export class EmptyComponent extends Component {
   public type = ComponentType.EmptyComponent;
+
+  public tick: () => void;
 }

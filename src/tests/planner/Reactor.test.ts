@@ -38,10 +38,34 @@ describe('Reactor', () => {
         expect(reactor.getComponentType(x, y)).toBe(ComponentType.EmptyComponent);
       }
     }
+    expect(() => reactor.getComponentType(2, 7)).toThrowError();
   });
 
   it('can set components', () => {
-    reactor.setComponentType(3, 5, ComponentType.UraniumCellSingle);
+    const component = reactor.setComponentType(3, 5, ComponentType.UraniumCellSingle);
     expect(reactor.getComponentType(3, 5)).toBe(ComponentType.UraniumCellSingle);
+    expect(reactor.getComponent(3, 5)).toBe(component);
+    expect(() => reactor.setComponentType(2, 7, ComponentType.UraniumCellSingle)).toThrowError();
+  });
+
+  it('can get correct neighbour coords', () => {
+    expect(reactor.getNeighbourCoords({ x: 2, y: 2 })).toEqual([
+      { x: 1, y: 2 },
+      { x: 3, y: 2 },
+      { x: 2, y: 1 },
+      { x: 2, y: 3 }
+    ]);
+    expect(reactor.getNeighbourCoords(9, 1)).toEqual([{ x: 8, y: 1 }, { x: 9, y: 2 }]);
+  });
+
+  it('can get correct neighbours', () => {
+    reactor.setComponentType(1, 1, ComponentType.UraniumCellSingle);
+    reactor.setComponentType(1, 3, ComponentType.UraniumCellSingle);
+    expect(reactor.getNeighbours({ x: 1, y: 2 })).toEqual([
+      reactor.getComponent(1, 1),
+      reactor.getComponent(1, 3)
+    ]);
+
+    expect(reactor.getNeighbours(2, 1)).toEqual([reactor.getComponent(1, 1)]);
   });
 });
