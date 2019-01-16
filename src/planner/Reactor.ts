@@ -3,15 +3,17 @@ import { Component } from './Component';
 import { ComponentType } from './ComponentType';
 import { ComponentClass } from './ComponentClass';
 import { Coords } from './Coords';
+import { ReactorComponent } from './components/ReactorComponent';
 
 export class Reactor {
   public readonly gridRows = 6;
   public readonly defaultGridCols = 3;
   public gridCols: number;
-  public heat: number = 0;
+  public reactorComponent: ReactorComponent;
   private grid: Component[][] = [];
 
   constructor(chambers: number = 6) {
+    this.reactorComponent = new ReactorComponent(this, -1, -1);
     this.gridCols = this.defaultGridCols + chambers;
     for (let y = 0; y < this.gridRows; y++) {
       this.grid[y] = [];
@@ -47,9 +49,12 @@ export class Reactor {
     return this.getComponent(x, y).type;
   }
 
-  public setComponentType(x: number, y: number, type: ComponentClass): Component {
+  public setComponentClass(x: number, y: number, type: ComponentClass): Component {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
+    }
+    if (type === ReactorComponent) {
+      throw new Error('You cannot add reactor component to grid');
     }
     return this.setComponent(x, y, new type(this, x, y));
   }
@@ -66,7 +71,7 @@ export class Reactor {
       x = a;
       y = b as number;
     }
-    const result = [{ x: x - 1, y }, { x: x + 1, y }, { x, y: y - 1 }, { x, y: y + 1 }];
+    const result = [{ x, y: y + 1 }, { x, y: y - 1 }, { x: x + 1, y }, { x: x - 1, y }];
     return result.filter(c => !this.isWrongCoords(c.x, c.y));
   }
 
