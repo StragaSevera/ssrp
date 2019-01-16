@@ -1,5 +1,6 @@
 import { Reactor } from '../../planner/Reactor';
 import { ComponentType } from '../../planner/ComponentType';
+import { UraniumCellSingle } from '../../planner/components/UraniumCellSingle';
 
 describe('Reactor', () => {
   let reactor: Reactor;
@@ -41,11 +42,11 @@ describe('Reactor', () => {
     expect(() => reactor.getComponentType(2, 7)).toThrowError();
   });
 
-  it('can set components', () => {
-    const component = reactor.setComponentType(3, 5, ComponentType.UraniumCellSingle);
+  it('can set components by class', () => {
+    const component = reactor.setComponentType(3, 5, UraniumCellSingle);
     expect(reactor.getComponentType(3, 5)).toBe(ComponentType.UraniumCellSingle);
     expect(reactor.getComponent(3, 5)).toBe(component);
-    expect(() => reactor.setComponentType(2, 7, ComponentType.UraniumCellSingle)).toThrowError();
+    expect(() => reactor.setComponentType(2, 7, UraniumCellSingle)).toThrowError();
   });
 
   it('can get correct neighbour coords', () => {
@@ -59,8 +60,8 @@ describe('Reactor', () => {
   });
 
   it('can get correct neighbours', () => {
-    reactor.setComponentType(1, 1, ComponentType.UraniumCellSingle);
-    reactor.setComponentType(1, 3, ComponentType.UraniumCellSingle);
+    reactor.setComponentType(1, 1, UraniumCellSingle);
+    reactor.setComponentType(1, 3, UraniumCellSingle);
     expect(reactor.getNeighbours({ x: 1, y: 2 })).toEqual([
       reactor.getComponent(1, 1),
       reactor.getComponent(1, 3)

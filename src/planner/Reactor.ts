@@ -1,7 +1,7 @@
 import { EmptyComponent } from './components/EmptyComponent';
 import { Component } from './Component';
 import { ComponentType } from './ComponentType';
-import { ComponentStore } from './ComponentStore';
+import { ComponentClass } from './ComponentClass';
 import { Coords } from './Coords';
 
 export class Reactor {
@@ -47,11 +47,11 @@ export class Reactor {
     return this.getComponent(x, y).type;
   }
 
-  public setComponentType(x: number, y: number, type: ComponentType): Component {
+  public setComponentType(x: number, y: number, type: ComponentClass): Component {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
     }
-    return this.setComponent(x, y, new ComponentStore[type](this, x, y));
+    return this.setComponent(x, y, new type(this, x, y));
   }
 
   public getNeighbourCoords(coords: Coords): Coords[];
