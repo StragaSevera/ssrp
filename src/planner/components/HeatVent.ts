@@ -1,8 +1,8 @@
-import { ComponentType } from '../ComponentType';
+import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
 
 export class HeatVent extends Component {
-  public type = ComponentType.HeatVent;
+  public brand = ComponentBrand.HeatVent;
 
   public tick(): void {}
 }

@@ -1,8 +1,8 @@
-import { ComponentType } from '../ComponentType';
+import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
 
 export class ReactorComponent extends Component {
-  public type = ComponentType.ReactorComponent;
+  public brand = ComponentBrand.ReactorComponent;
   public currentEU: number = 0;
   public nextEU: number = 0;
 

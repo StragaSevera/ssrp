@@ -1,6 +1,6 @@
 import { EmptyComponent } from './components/EmptyComponent';
 import { Component } from './Component';
-import { ComponentType } from './ComponentType';
+import { ComponentBrand } from './ComponentBrand';
 import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
@@ -42,11 +42,11 @@ export class Reactor {
     return x <= 0 || x > this.gridCols || y <= 0 || y > this.gridRows;
   }
 
-  public getComponentType(x: number, y: number): ComponentType {
+  public getComponentType(x: number, y: number): ComponentBrand {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
     }
-    return this.getComponent(x, y).type;
+    return this.getComponent(x, y).brand;
   }
 
   public setComponentClass(x: number, y: number, type: ComponentClass): Component {
@@ -68,6 +68,6 @@ export class Reactor {
     const neighbourCoords = this.getNeighbourCoords(x, y);
     return neighbourCoords
       .map(c => this.getComponent(c.x, c.y))
-      .filter(comp => comp.type !== ComponentType.EmptyComponent);
+      .filter(comp => comp.brand !== ComponentBrand.EmptyComponent);
   }
 }

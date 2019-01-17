@@ -1,4 +1,4 @@
-export enum ComponentType {
+export enum ComponentBrand {
   EmptyComponent = 'EmptyComponent',
   ReactorComponent = 'ReactorComponent',
   UraniumCellSingle = 'UraniumCellSingle',

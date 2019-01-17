@@ -1,4 +1,4 @@
-import { ComponentType } from '../ComponentType';
+import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
 
 interface HeatEU {
@@ -7,7 +7,7 @@ interface HeatEU {
 }
 
 export class UraniumCellSingle extends Component {
-  public type = ComponentType.UraniumCellSingle;
+  public brand = ComponentBrand.UraniumCellSingle;
 
   private static getEUHeat(neighbours: Component[]): HeatEU {
     const reflectorNeighbours = neighbours.filter(n => n.isReflector());

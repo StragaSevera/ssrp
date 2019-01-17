@@ -1,8 +1,8 @@
 import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
 
-export class EmptyComponent extends Component {
-  public brand = ComponentBrand.EmptyComponent;
+export class CoolantCell20k extends Component {
+  public brand = ComponentBrand.CoolantCell20k;
 
   public tick(): void {}
 }

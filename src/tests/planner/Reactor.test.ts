@@ -1,5 +1,5 @@
 import { Reactor } from '../../planner/Reactor';
-import { ComponentType } from '../../planner/ComponentType';
+import { ComponentBrand } from '../../planner/ComponentBrand';
 import { UraniumCellSingle } from '../../planner/components/UraniumCellSingle';
 import { ReactorComponent } from '../../planner/components/ReactorComponent';
 
@@ -42,7 +42,7 @@ describe('Reactor', () => {
   it('has empty grid', () => {
     for (let x = 1; x <= reactor.gridCols; x++) {
       for (let y = 1; y <= reactor.gridRows; y++) {
-        expect(reactor.getComponentType(x, y)).toBe(ComponentType.EmptyComponent);
+        expect(reactor.getComponentType(x, y)).toBe(ComponentBrand.EmptyComponent);
       }
     }
     expect(() => reactor.getComponentType(2, 7)).toThrowError();
@@ -50,7 +50,7 @@ describe('Reactor', () => {
 
   it('can set components by class', () => {
     const component = reactor.setComponentClass(3, 5, UraniumCellSingle);
-    expect(reactor.getComponentType(3, 5)).toBe(ComponentType.UraniumCellSingle);
+    expect(reactor.getComponentType(3, 5)).toBe(ComponentBrand.UraniumCellSingle);
     expect(reactor.getComponent(3, 5)).toBe(component);
     expect(() => reactor.setComponentClass(2, 7, UraniumCellSingle)).toThrowError();
   });

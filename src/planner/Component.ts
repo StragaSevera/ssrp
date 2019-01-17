@@ -1,10 +1,10 @@
-import { ComponentType } from './ComponentType';
+import { ComponentBrand } from './ComponentBrand';
 import { Reactor } from './Reactor';
 import { ReactorComponent } from './components/ReactorComponent';
 import { CoordsDict } from './Coords';
 
 export abstract class Component {
-  public type: ComponentType;
+  public brand: ComponentBrand;
   public currentHeat: number = 0;
   public nextHeat: number = 0;
   public coords: CoordsDict;
@@ -24,7 +24,7 @@ export abstract class Component {
 
   public addNextHeat(heat: number): void {
     if (!this.isHeatable()) {
-      throw new Error(`This component cannot be heated: ${this.type.toString()}`);
+      throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
     }
     this.nextHeat += heat;
   }
