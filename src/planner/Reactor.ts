@@ -70,4 +70,39 @@ export class Reactor {
       .map(c => this.getComponent(c.x, c.y))
       .filter(comp => comp.brand !== ComponentBrand.EmptyComponent);
   }
+
+  private getComponents() {
+    const result: Component[] = [];
+    for (const row of this.grid) {
+      for (const component of row) {
+        if (component.brand !== ComponentBrand.EmptyComponent) {
+          result.push(component);
+        }
+      }
+    }
+    return result;
+  }
+
+  public tick() {
+    const components = this.getComponents();
+    components.forEach(c => c.tick());
+    components.forEach(c => c.finalizeTick());
+    this.reactorComponent.finalizeTick();
+  }
+
+  public get currentEU() {
+    return this.reactorComponent.currentEU;
+  }
+
+  public get nextEU() {
+    return this.reactorComponent.nextEU;
+  }
+
+  public get currentHeat() {
+    return this.reactorComponent.currentHeat;
+  }
+
+  public get nextHeat() {
+    return this.reactorComponent.nextHeat;
+  }
 }

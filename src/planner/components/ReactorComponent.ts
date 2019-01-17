@@ -15,4 +15,10 @@ export class ReactorComponent extends Component {
   public addNextEU(eu: number): void {
     this.nextEU += eu;
   }
+
+  public finalizeTick(): void {
+    super.finalizeTick();
+    this.currentEU += this.nextEU;
+    this.nextEU = 0;
+  }
 }

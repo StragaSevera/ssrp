@@ -37,5 +37,10 @@ export abstract class Component {
     return false;
   }
 
+  public finalizeTick(): void {
+    this.currentHeat += this.nextHeat;
+    this.nextHeat = 0;
+  }
+
   public abstract tick(): void;
 }
