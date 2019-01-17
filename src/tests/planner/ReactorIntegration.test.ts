@@ -106,12 +106,36 @@ describe('Integration tests for reactor', () => {
       ]
     },
     {
-      xname: 'Schemes with single cells and vents',
+      name: 'Schemes with single cells and vents',
       schemes: [
         {
           eu: 5,
           heat: 0,
-          components: [{ x: 2, y: 2, type: UraniumCellSingle }, { x: 1, y: 2, type: HeatVent }]
+          components: [{ x: 1, y: 2, type: HeatVent }, { x: 2, y: 2, type: UraniumCellSingle }]
+        },
+        {
+          eu: 10,
+          heat: 0,
+          components: [
+            { x: 1, y: 1, type: UraniumCellSingle },
+            { x: 1, y: 2, type: HeatVent, heat: 2 },
+            { x: 2, y: 2, type: UraniumCellSingle }
+          ]
+        },
+        {
+          eu: 65,
+          heat: 60,
+          components: [
+            { x: 2, y: 2, type: UraniumCellSingle },
+            { x: 3, y: 2, type: UraniumCellSingle },
+            { x: 2, y: 3, type: UraniumCellSingle },
+            { x: 1, y: 2, type: UraniumCellSingle },
+            { x: 2, y: 1, type: UraniumCellSingle },
+            { x: 1, y: 1, type: HeatVent, heat: 6 },
+            { x: 1, y: 3, type: HeatVent, heat: 6 },
+            { x: 3, y: 1, type: HeatVent, heat: 6 },
+            { x: 3, y: 3, type: HeatVent, heat: 6 },
+          ]
         }
       ]
     }

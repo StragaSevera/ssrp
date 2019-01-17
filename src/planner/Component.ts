@@ -29,6 +29,13 @@ export abstract class Component {
     this.nextHeat += heat;
   }
 
+  public lowerNextHeat(heat: number): void {
+    if (!this.isHeatable()) {
+      throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
+    }
+    this.nextHeat -= heat;
+  }
+
   public isHeatable(): boolean {
     return true;
   }
@@ -40,7 +47,13 @@ export abstract class Component {
   public finalizeTick(): void {
     this.currentHeat += this.nextHeat;
     this.nextHeat = 0;
+    if (this.currentHeat < 0) this.currentHeat = 0;
   }
 
   public abstract tick(): void;
+
+  public fullTick(): void {
+    this.tick();
+    this.finalizeTick();
+  }
 }
