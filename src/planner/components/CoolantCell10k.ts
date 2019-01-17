@@ -1,8 +1,12 @@
 import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
 
-export class CoolantCell20k extends Component {
+export class CoolantCell10k extends Component {
   public brand = ComponentBrand.CoolantCell20k;
+
+  public getMaxHeat(): number {
+    return 10_000;
+  }
 
   public tick(): void {}
 }

@@ -12,6 +12,10 @@ export class ReactorComponent extends Component {
     throw new Error('There cannot be neigbours for a reactor component!');
   }
 
+  public getMaxHeat(): number {
+    return 8500;
+  }
+
   public addNextEU(eu: number): void {
     this.nextEU += eu;
   }

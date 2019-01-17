@@ -3,7 +3,7 @@ import { UraniumCellSingle } from '../../planner/components/UraniumCellSingle';
 import { Reactor } from '../../planner/Reactor';
 import { HeatVent } from '../../planner/components/HeatVent';
 import { Component } from '../../planner/Component';
-import { CoolantCell20k } from '../../planner/components/CoolantCell20k';
+import { CoolantCell10k } from '../../planner/components/CoolantCell10k';
 
 interface ReactorSchemeGroup {
   name?: string;
@@ -81,7 +81,7 @@ describe('Integration tests for reactor', () => {
           eu: 5,
           heat: 0,
           components: [
-            { x: 1, y: 2, type: CoolantCell20k, heat: 4 },
+            { x: 1, y: 2, type: CoolantCell10k, heat: 4 },
             { x: 2, y: 2, type: UraniumCellSingle }
           ]
         },
@@ -90,7 +90,7 @@ describe('Integration tests for reactor', () => {
           heat: 0,
           components: [
             { x: 1, y: 1, type: UraniumCellSingle },
-            { x: 1, y: 2, type: CoolantCell20k, heat: 8 },
+            { x: 1, y: 2, type: CoolantCell10k, heat: 8 },
             { x: 2, y: 2, type: UraniumCellSingle }
           ]
         },
@@ -100,7 +100,7 @@ describe('Integration tests for reactor', () => {
           components: [
             { x: 1, y: 1, type: UraniumCellSingle },
             { x: 1, y: 2, type: UraniumCellSingle },
-            { x: 2, y: 2, type: CoolantCell20k, heat: 12 }
+            { x: 2, y: 2, type: CoolantCell10k, heat: 12 }
           ]
         }
       ]

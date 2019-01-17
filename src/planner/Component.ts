@@ -37,7 +37,16 @@ export abstract class Component {
   }
 
   public isHeatable(): boolean {
-    return true;
+    return this.getMaxHeat() !== 0;
+  }
+
+  public getMaxHeat(): number {
+    return 0;
+  }
+
+  public getHeatRatio(): number {
+    const maxHeat = this.getMaxHeat();
+    return maxHeat === 0 ? 1 : this.currentHeat / maxHeat;
   }
 
   public isReflector(): boolean {

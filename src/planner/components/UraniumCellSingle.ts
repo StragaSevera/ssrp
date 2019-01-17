@@ -18,10 +18,6 @@ export class UraniumCellSingle extends Component {
     };
   }
 
-  public isHeatable(): boolean {
-    return false;
-  }
-
   public isReflector(): boolean {
     return true;
   }
