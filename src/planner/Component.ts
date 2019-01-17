@@ -1,13 +1,13 @@
 import { ComponentType } from './ComponentType';
 import { Reactor } from './Reactor';
-import { Coords } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
+import { CoordsDict } from './Coords';
 
 export abstract class Component {
   public type: ComponentType;
   public currentHeat: number = 0;
   public nextHeat: number = 0;
-  public coords: Coords;
+  public coords: CoordsDict;
 
   private reactor: Reactor;
   protected reactorComponent: ReactorComponent;
@@ -19,7 +19,7 @@ export abstract class Component {
   }
 
   protected getNeighbours(): Component[] {
-    return this.reactor.getNeighbours(this.coords);
+    return this.reactor.getNeighbours(this.coords.x, this.coords.y);
   }
 
   public addNextHeat(heat: number): void {

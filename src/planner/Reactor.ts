@@ -2,7 +2,7 @@ import { EmptyComponent } from './components/EmptyComponent';
 import { Component } from './Component';
 import { ComponentType } from './ComponentType';
 import { ComponentClass } from './ComponentClass';
-import { Coords } from './Coords';
+import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
 
 export class Reactor {
@@ -59,26 +59,13 @@ export class Reactor {
     return this.setComponent(x, y, new type(this, x, y));
   }
 
-  public getNeighbourCoords(coords: Coords): Coords[];
-  public getNeighbourCoords(x: number, y: number): Coords[];
-  public getNeighbourCoords(a: number | Coords, b?: number): Coords[];
-  public getNeighbourCoords(a: number | Coords, b?: number): Coords[] {
-    let x: number;
-    let y: number;
-    if (typeof a === 'object') {
-      ({ x, y } = a as Coords);
-    } else {
-      x = a;
-      y = b as number;
-    }
+  public getNeighbourCoords(x: number, y: number): CoordsDict[] {
     const result = [{ x, y: y + 1 }, { x, y: y - 1 }, { x: x + 1, y }, { x: x - 1, y }];
     return result.filter(c => !this.isWrongCoords(c.x, c.y));
   }
 
-  public getNeighbours(coords: Coords): Component[];
-  public getNeighbours(x: number, y: number): Component[];
-  public getNeighbours(a: number | Coords, b?: number): Component[] {
-    const neighbourCoords = this.getNeighbourCoords(a, b);
+  public getNeighbours(x: number, y: number): Component[] {
+    const neighbourCoords = this.getNeighbourCoords(x, y);
     return neighbourCoords
       .map(c => this.getComponent(c.x, c.y))
       .filter(comp => comp.type !== ComponentType.EmptyComponent);

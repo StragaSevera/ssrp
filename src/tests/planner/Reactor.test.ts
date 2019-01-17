@@ -60,7 +60,7 @@ describe('Reactor', () => {
   });
 
   it('can get correct neighbour coords', () => {
-    expect(reactor.getNeighbourCoords({ x: 2, y: 2 })).toEqual([
+    expect(reactor.getNeighbourCoords(2, 2)).toEqual([
       { x: 2, y: 3 },
       { x: 2, y: 1 },
       { x: 3, y: 2 },
@@ -72,7 +72,7 @@ describe('Reactor', () => {
   it('can get correct neighbours', () => {
     reactor.setComponentClass(1, 1, UraniumCellSingle);
     reactor.setComponentClass(1, 3, UraniumCellSingle);
-    expect(reactor.getNeighbours({ x: 1, y: 2 })).toEqual([
+    expect(reactor.getNeighbours(1, 2)).toEqual([
       reactor.getComponent(1, 3),
       reactor.getComponent(1, 1)
     ]);
