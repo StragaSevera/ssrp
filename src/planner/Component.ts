@@ -4,7 +4,7 @@ import { ReactorComponent } from './components/ReactorComponent';
 import { CoordsDict } from './Coords';
 
 export abstract class Component {
-  public brand: ComponentBrand;
+  public brand!: ComponentBrand;
   public currentHeat: number = 0;
   public nextHeat: number = 0;
   public coords: CoordsDict;
