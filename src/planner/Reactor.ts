@@ -4,23 +4,28 @@ import { ComponentBrand } from './ComponentBrand';
 import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
+import { action, observable, runInAction } from 'mobx';
 
 export class Reactor {
   public readonly gridRows = 6;
   public readonly defaultGridCols = 3;
-  public gridCols: number;
-  public reactorComponent: ReactorComponent;
-  private grid: Component[][] = [];
+  public gridCols!: number;
+  @observable
+  public reactorComponent!: ReactorComponent;
+  @observable
+  public grid: Component[][] = [];
 
   constructor(chambers: number = 6) {
-    this.reactorComponent = new ReactorComponent(this, -1, -1);
-    this.gridCols = this.defaultGridCols + chambers;
-    for (let y = 0; y < this.gridRows; y++) {
-      this.grid[y] = [];
-      for (let x = 0; x < this.gridCols; x++) {
-        this.grid[y][x] = new EmptyComponent(this, x, y);
+    runInAction(() => {
+      this.reactorComponent = new ReactorComponent(this, -1, -1);
+      this.gridCols = this.defaultGridCols + chambers;
+      for (let y = 0; y < this.gridRows; y++) {
+        this.grid[y] = [];
+        for (let x = 0; x < this.gridCols; x++) {
+          this.grid[y][x] = new EmptyComponent(this, x, y);
+        }
       }
-    }
+    });
   }
 
   public getComponent(x: number, y: number): Component {
@@ -30,6 +35,7 @@ export class Reactor {
     return this.grid[y - 1][x - 1];
   }
 
+  @action
   private setComponent(x: number, y: number, component: Component): Component {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
@@ -49,14 +55,17 @@ export class Reactor {
     return this.getComponent(x, y).brand;
   }
 
+  @action
   public setComponentClass(x: number, y: number, type: ComponentClass): Component {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
     }
-    if (type === ReactorComponent) {
+    // Hacky, but simple comparing type does not work
+    const component = new type(this, x, y);
+    if (component.brand === ComponentBrand.ReactorComponent) {
       throw new Error('You cannot add reactor component to grid');
     }
-    return this.setComponent(x, y, new type(this, x, y));
+    return this.setComponent(x, y, component);
   }
 
   public getNeighbourCoords(x: number, y: number): CoordsDict[] {
@@ -71,7 +80,7 @@ export class Reactor {
       .filter(comp => comp.brand !== ComponentBrand.EmptyComponent);
   }
 
-  private getComponents() {
+  private get components(): Component[] {
     const result: Component[] = [];
     for (const row of this.grid) {
       for (const component of row) {
@@ -83,8 +92,8 @@ export class Reactor {
     return result;
   }
 
-  public tick() {
-    const components = this.getComponents();
+  public tick(): void {
+    const components = this.components;
     components.forEach(c => c.tick());
     components.forEach(c => c.finalizeTick());
     this.reactorComponent.finalizeTick();

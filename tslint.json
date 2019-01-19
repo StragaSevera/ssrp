@@ -19,6 +19,7 @@
     "no-empty": false,
     "object-literal-sort-keys": false,
     "trailing-comma": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "semicolon": [true, "always", "strict-bound-class-methods"]
   }
 }

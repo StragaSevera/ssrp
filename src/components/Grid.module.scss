@@ -1,0 +1,13 @@
+.grid,
+.grid td {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+.grid {
+  margin: 20px;
+
+  td {
+    padding: 10px;
+  }
+}

@@ -1,5 +1,6 @@
 import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
+import { action } from 'mobx';
 
 interface HeatEU {
   eu: number;
@@ -10,7 +11,7 @@ export class UraniumCellSingle extends Component {
   public brand = ComponentBrand.UraniumCellSingle;
 
   private static getEUHeat(neighbours: Component[]): HeatEU {
-    const reflectorNeighbours = neighbours.filter(n => n.isReflector());
+    const reflectorNeighbours = neighbours.filter(n => n.isReflector);
     const pulses = 1 + reflectorNeighbours.length;
     return {
       eu: 5 * pulses,
@@ -18,17 +19,18 @@ export class UraniumCellSingle extends Component {
     };
   }
 
-  public isReflector(): boolean {
+  public get isReflector(): boolean {
     return true;
   }
 
+  @action
   public tick(): void {
-    const neighbours = this.getNeighbours();
+    const neighbours = this.neighbours;
     const { eu, heat } = UraniumCellSingle.getEUHeat(neighbours);
 
     this.reactorComponent.addNextEU(eu);
 
-    const heatableNeighbours = neighbours.filter(n => n.isHeatable());
+    const heatableNeighbours = neighbours.filter(n => n.isHeatable);
     if (heatableNeighbours.length === 0) {
       this.reactorComponent.addNextHeat(heat);
     } else {

@@ -2,11 +2,16 @@ import { ComponentBrand } from './ComponentBrand';
 import { Reactor } from './Reactor';
 import { ReactorComponent } from './components/ReactorComponent';
 import { CoordsDict } from './Coords';
+import { action, observable } from 'mobx';
 
-export abstract class Component {
+export class Component {
+  @observable
   public brand!: ComponentBrand;
+  @observable
   public currentHeat: number = 0;
+  @observable
   public nextHeat: number = 0;
+  @observable.struct
   public coords: CoordsDict;
 
   private reactor: Reactor;
@@ -18,49 +23,53 @@ export abstract class Component {
     this.coords = { x, y };
   }
 
-  protected getNeighbours(): Component[] {
+  protected get neighbours(): Component[] {
     return this.reactor.getNeighbours(this.coords.x, this.coords.y);
   }
 
+  @action
   public addNextHeat(heat: number): void {
-    if (!this.isHeatable()) {
+    if (!this.isHeatable) {
       throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
     }
     this.nextHeat += heat;
   }
 
+  @action
   public lowerNextHeat(heat: number): void {
-    if (!this.isHeatable()) {
+    if (!this.isHeatable) {
       throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
     }
     this.nextHeat -= heat;
   }
 
-  public isHeatable(): boolean {
-    return this.getMaxHeat() !== 0;
+  public get isHeatable(): boolean {
+    return this.maxHeat !== 0;
   }
 
-  public getMaxHeat(): number {
+  public get maxHeat(): number {
     return 0;
   }
 
-  public getHeatRatio(): number {
-    const maxHeat = this.getMaxHeat();
+  public get heatRatio(): number {
+    const maxHeat = this.maxHeat;
     return maxHeat === 0 ? 1 : this.currentHeat / maxHeat;
   }
 
-  public isReflector(): boolean {
+  public get isReflector(): boolean {
     return false;
   }
 
+  @action
   public finalizeTick(): void {
     this.currentHeat += this.nextHeat;
     this.nextHeat = 0;
     if (this.currentHeat < 0) this.currentHeat = 0;
   }
 
-  public abstract tick(): void;
+  public tick(): void {}
 
+  @action
   public fullTick(): void {
     this.tick();
     this.finalizeTick();

@@ -1,31 +1,35 @@
 import * as React from 'react';
-import styles from './Grid.module.css';
+import styles from './Grid.module.scss';
+import { inject, observer } from 'mobx-react';
+import { Stores } from '../const/Stores';
+import { ReactorStore } from '../planner/ReactorStore';
+import { UraniumCellSingle } from '../planner/components/UraniumCellSingle';
 
-export class Grid extends React.Component {
-  public contents() {
-    Array(6)
-      .fill(1)
-      .map((_, i) => i);
+@inject(Stores.store)
+@observer
+export class Grid extends React.Component<{ store?: ReactorStore }> {
+  private changeCell = (x: number, y: number) => {
+    return () => {
+      const reactor = this.props.store!.reactor;
+      reactor.setComponentClass(x, y, UraniumCellSingle);
+    };
+  };
 
-    return Array(6)
-      .fill(1)
-      .map((_, i) => (
-        <tr key={i}>
-          {Array(9)
-            .fill(1)
-            .map((__, j) => (
-              <td key={j}>E</td>
-            ))}
-        </tr>
-      ));
-  }
   public render() {
+    const reactor = this.props.store!.reactor;
     return (
-      <table className={styles.error}>
-        <tr>
-          <td>{JSON.stringify(styles)}</td>
-        </tr>
-        {this.contents()}
+      <table className={styles.grid}>
+        <tbody>
+          {reactor.grid.map((row, y) => (
+            <tr key={y + 1}>
+              {row.map((col, x) => (
+                <td key={x + 1} onClick={this.changeCell(x + 1, y + 1)}>
+                  {col.brand[0]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }

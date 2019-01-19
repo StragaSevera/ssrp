@@ -1,25 +1,29 @@
 import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
+import { action } from 'mobx';
 
 export class ReactorComponent extends Component {
   public brand = ComponentBrand.ReactorComponent;
   public currentEU: number = 0;
   public nextEU: number = 0;
 
+  @action
   public tick(): void {}
 
-  protected getNeighbours(): never {
+  protected get neighbours(): never {
     throw new Error('There cannot be neigbours for a reactor component!');
   }
 
-  public getMaxHeat(): number {
+  public get maxHeat(): number {
     return 8500;
   }
 
+  @action
   public addNextEU(eu: number): void {
     this.nextEU += eu;
   }
 
+  @action
   public finalizeTick(): void {
     super.finalizeTick();
     this.currentEU += this.nextEU;

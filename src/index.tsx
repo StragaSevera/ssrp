@@ -3,8 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { configure } from 'mobx';
+import { StoreComponent } from './components/StoreComponent';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+configure({ enforceActions: 'always' });
+
+ReactDOM.render(
+  <StoreComponent>
+    <App />
+  </StoreComponent>,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
