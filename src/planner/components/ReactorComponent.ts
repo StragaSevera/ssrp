@@ -1,10 +1,12 @@
 import { ComponentBrand } from '../ComponentBrand';
 import { Component } from '../Component';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 
 export class ReactorComponent extends Component {
   public brand = ComponentBrand.ReactorComponent;
+  @observable
   public currentEU: number = 0;
+  @observable
   public nextEU: number = 0;
 
   @action

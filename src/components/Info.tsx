@@ -1,19 +1,27 @@
 import * as React from 'react';
-import { ReactorStoreProps } from '../planner/ReactorStore';
+import { ReactorStore, ReactorStoreProps } from '../planner/ReactorStore';
 import { inject, observer } from 'mobx-react';
 import { Stores } from '../const/Stores';
 
-const info: React.FunctionComponent<ReactorStoreProps> = ({ store }) => {
-  store = store!;
-  return (
-    <div>
-      <p>Current Heat: {store.reactor.currentHeat}.</p>
-      <p>Current EU: {store.reactor.currentEU}.</p>
-      <p>
-        <input type='button' onClick={store.tick} value='Tick!'/>
-      </p>
-    </div>
-  );
-};
+@inject(Stores.store)
+@observer
+export class Info extends React.Component<ReactorStoreProps> {
+  private store: ReactorStore;
 
-export const Info = inject(Stores.store)(observer(info));
+  constructor(props: ReactorStoreProps) {
+    super(props);
+    this.store = props.store!;
+  }
+
+  public render() {
+    return (
+      <div>
+        <p>Current Heat: {this.store.reactor.currentHeat}.</p>
+        <p>Current EU: {this.store.reactor.currentEU}.</p>
+        <p>
+          <input type='button' onClick={this.store.tick} value='Tick!' />
+        </p>
+      </div>
+    );
+  }
+}
