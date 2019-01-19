@@ -74,4 +74,10 @@ export class Component {
     this.tick();
     this.finalizeTick();
   }
+
+  @action
+  public refresh() {
+    this.currentHeat = 0;
+    this.nextHeat = 0;
+  }
 }

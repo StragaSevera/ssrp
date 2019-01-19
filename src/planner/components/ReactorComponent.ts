@@ -29,4 +29,11 @@ export class ReactorComponent extends Component {
     this.currentEU += this.nextEU;
     this.nextEU = 0;
   }
+
+  @action
+  public refresh() {
+    super.refresh();
+    this.nextEU = 0;
+    this.currentEU = 0;
+  }
 }

@@ -1,16 +1,16 @@
 import * as React from 'react';
-import './App.css';
+import style from './App.module.css';
 
-import { Grid } from './components/Grid';
+import { Palette } from './components/Palette';
+import { MainArea } from './components/MainArea';
 
-class App extends React.Component {
+export class App extends React.Component {
   public render() {
     return (
-      <div className='App'>
-        <Grid/>
+      <div className={style.app}>
+        <MainArea/>
+        <Palette/>
       </div>
     );
   }
 }
-
-export default App;

@@ -1,6 +1,6 @@
 import { EmptyComponent } from './components/EmptyComponent';
 import { Component } from './Component';
-import { ComponentBrand } from './ComponentBrand';
+import { ComponentBrand, ComponentDict } from './ComponentBrand';
 import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
@@ -56,15 +56,24 @@ export class Reactor {
   }
 
   @action
-  public setComponentClass(x: number, y: number, type: ComponentClass): Component {
+  public setComponentClass(x: number, y: number, type: ComponentClass | ComponentBrand): Component {
     if (this.isWrongCoords(x, y)) {
       throw new Error(`Wrong coords: ${x}, ${y}`);
     }
-    // Hacky, but simple comparing type does not work
-    const component = new type(this, x, y);
-    if (component.brand === ComponentBrand.ReactorComponent) {
-      throw new Error('You cannot add reactor component to grid');
+    let component: Component;
+    if (typeof type === 'string') {
+      if (type === ComponentBrand.ReactorComponent) {
+        throw new Error('You cannot add reactor component to grid');
+      }
+      component = new ComponentDict[type](this, x, y);
+    } else {
+      // Hacky, but simple comparing type does not work
+      component = new type(this, x, y);
+      if (component.brand === ComponentBrand.ReactorComponent) {
+        throw new Error('You cannot add reactor component to grid');
+      }
     }
+
     return this.setComponent(x, y, component);
   }
 
@@ -114,5 +123,11 @@ export class Reactor {
 
   public get nextHeat() {
     return this.reactorComponent.nextHeat;
+  }
+
+  @action
+  public refresh() {
+    this.components.forEach(c => c.refresh());
+    this.reactorComponent.refresh();
   }
 }

@@ -1,0 +1,14 @@
+.img_component {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  display: block;
+  margin: auto;
+}
+
+.selected {
+  outline: red 2px solid;
+  outline-offset: -2px;
+}
