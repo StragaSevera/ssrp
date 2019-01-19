@@ -1,13 +1,28 @@
-.grid,
-.grid td {
-  border: 2px solid black;
+.grid {
+  border: 0;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .grid {
   margin: 20px;
 
   td {
-    padding: 10px;
+    background: url('../assets/GridCell.png');
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    text-align:center;
+    vertical-align:middle;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    display: block;
+    margin: auto;
   }
 }

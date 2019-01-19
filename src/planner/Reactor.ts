@@ -92,6 +92,7 @@ export class Reactor {
     return result;
   }
 
+  @action
   public tick(): void {
     const components = this.components;
     components.forEach(c => c.tick());

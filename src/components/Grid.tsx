@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import { Stores } from '../const/Stores';
 import { ReactorStore } from '../planner/ReactorStore';
 import { UraniumCellSingle } from '../planner/components/UraniumCellSingle';
+import { ImageComponent } from './ImageComponent';
 
 @inject(Stores.store)
 @observer
@@ -24,7 +25,7 @@ export class Grid extends React.Component<{ store?: ReactorStore }> {
             <tr key={y + 1}>
               {row.map((col, x) => (
                 <td key={x + 1} onClick={this.changeCell(x + 1, y + 1)}>
-                  {col.brand[0]}
+                  <ImageComponent brand={col.brand} />
                 </td>
               ))}
             </tr>
