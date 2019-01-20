@@ -8,7 +8,32 @@
   margin: auto;
 }
 
-.selected {
-  outline: red 2px solid;
+.img_container {
+  @extend .img_component;
+  background-size: 32px;
+  background-repeat: no-repeat;
+
+  img {
+    margin-top: 26px;
+  }
+}
+
+@mixin border_in {
+  outline: 2px solid;
   outline-offset: -2px;
+}
+
+.selected_high {
+  @include border_in;
+  outline-color: red;
+}
+
+.selected_medium {
+  @include border_in;
+  outline-color: yellow;
+}
+
+.selected_low {
+  @include border_in;
+  outline-color: limegreen;
 }

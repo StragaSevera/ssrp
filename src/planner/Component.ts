@@ -53,7 +53,7 @@ export class Component {
 
   public get heatRatio(): number {
     const maxHeat = this.maxHeat;
-    return maxHeat === 0 ? 1 : this.currentHeat / maxHeat;
+    return maxHeat === 0 ? 0 : this.currentHeat / maxHeat;
   }
 
   public get isReflector(): boolean {

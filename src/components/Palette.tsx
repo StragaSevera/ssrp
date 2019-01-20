@@ -3,7 +3,7 @@ import styles from './TableGrid.module.scss';
 import { inject } from 'mobx-react';
 import { Stores } from '../const/Stores';
 import { ReactorStore, ReactorStoreProps } from '../planner/ReactorStore';
-import { ImageComponent } from './ImageComponent';
+import { ImageComponent, ImageSelection } from './ImageComponent';
 import { ComponentBrand, ComponentListFiltered } from '../planner/ComponentBrand';
 
 interface State {
@@ -57,7 +57,7 @@ export class Palette extends React.Component<ReactorStoreProps, State> {
             <tr key={y}>
               {row.map((col, x) => (
                 <td key={x} onClick={this.pickComponent(x, y)}>
-                  <ImageComponent brand={col} selected={this.isSelected(x, y)} />
+                  <ImageComponent brand={col} selected={this.isSelected(x, y) ? ImageSelection.high : undefined} />
                 </td>
               ))}
             </tr>

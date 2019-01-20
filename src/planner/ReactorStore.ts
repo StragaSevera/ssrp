@@ -14,16 +14,16 @@ export class ReactorStore {
     });
   }
 
-  @action
+  @action.bound
   public recount() {
     this.reactor.refresh();
     this.reactor.tick();
   }
 
-  @action
-  public tick = () => {
+  @action.bound
+  public tick() {
     this.reactor.tick();
-  };
+  }
 }
 
 export interface ReactorStoreProps {
