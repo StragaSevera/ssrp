@@ -1,5 +1,5 @@
 import { Reactor } from '../../planner/Reactor';
-import { ComponentBrand } from '../../planner/ComponentBrand';
+import { ComponentBrand } from '../../const/ComponentBrand';
 import { UraniumCellSingle } from '../../planner/components/UraniumCellSingle';
 import { ReactorComponent } from '../../planner/components/ReactorComponent';
 

@@ -1,26 +1,26 @@
 import { Reactor } from '../../../planner/Reactor';
-import { UraniumCellSingle } from '../../../planner/components/UraniumCellSingle';
+import { UraniumCellDouble } from '../../../planner/components/UraniumCellDouble';
 import { CoolantCell20k } from '../../../planner/components/CoolantCell20k';
 
-describe('Uranium Cell (single)', () => {
+describe('Uranium Cell (double)', () => {
   let reactor: Reactor;
-  let cell: UraniumCellSingle;
+  let cell: UraniumCellDouble;
   beforeEach(() => {
     reactor = new Reactor();
-    cell = reactor.setComponentClass(2, 2, UraniumCellSingle) as UraniumCellSingle;
+    cell = reactor.setComponentClass(2, 2, UraniumCellDouble) as UraniumCellDouble;
   });
 
   describe('with heat', () => {
     it('pulses solo to reactor heat', () => {
       cell.tick();
-      expect(reactor.nextHeat).toBe(4);
+      expect(reactor.nextHeat).toBe(24);
     });
 
     it('pulses to one neighbour', () => {
       const neighbour = reactor.setComponentClass(1, 2, CoolantCell20k);
       cell.tick();
       expect(reactor.nextHeat).toBe(0);
-      expect(neighbour.nextHeat).toBe(4);
+      expect(neighbour.nextHeat).toBe(24);
     });
 
     it('pulses to four neighbours', () => {
@@ -30,7 +30,7 @@ describe('Uranium Cell (single)', () => {
         reactor.setComponentClass(3, 2, CoolantCell20k),
         reactor.setComponentClass(2, 3, CoolantCell20k)
       ];
-      const neighbourHeat = [1, 1, 1, 1];
+      const neighbourHeat = [6, 6, 6, 6];
       cell.tick();
       expect(reactor.nextHeat).toBe(0);
       expect(neighbours.map(v => v.nextHeat)).toEqual(neighbourHeat);
@@ -42,29 +42,29 @@ describe('Uranium Cell (single)', () => {
         reactor.setComponentClass(2, 1, CoolantCell20k),
         reactor.setComponentClass(3, 2, CoolantCell20k)
       ];
-      const neighbourHeat = [2, 1, 1];
+      const neighbourHeat = [8, 8, 8];
       cell.tick();
       expect(reactor.nextHeat).toBe(0);
       expect(neighbours.map(v => v.nextHeat)).toEqual(neighbourHeat);
     });
 
     it('generates more heat when near another cell', () => {
-      reactor.setComponentClass(1, 2, UraniumCellSingle);
+      reactor.setComponentClass(1, 2, UraniumCellDouble);
       cell.tick();
-      expect(reactor.nextHeat).toBe(12);
+      expect(reactor.nextHeat).toBe(48);
     });
   });
 
   describe('with energy', () => {
     it('pulses solo to reactor energy', () => {
       cell.tick();
-      expect(reactor.nextEU).toEqual(5);
+      expect(reactor.nextEU).toEqual(20);
     });
 
     it('generates more energy when near another cell', () => {
-      reactor.setComponentClass(1, 2, UraniumCellSingle);
+      reactor.setComponentClass(1, 2, UraniumCellDouble);
       cell.tick();
-      expect(reactor.nextEU).toBe(10);
+      expect(reactor.nextEU).toBe(30);
     });
   });
 });

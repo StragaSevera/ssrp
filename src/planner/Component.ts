@@ -1,4 +1,4 @@
-import { ComponentBrand } from './ComponentBrand';
+import { ComponentBrand } from '../const/ComponentBrand';
 import { Reactor } from './Reactor';
 import { ReactorComponent } from './components/ReactorComponent';
 import { CoordsDict } from './Coords';

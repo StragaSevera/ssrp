@@ -1,6 +1,6 @@
 import { action, observable, runInAction } from 'mobx';
 import { Reactor } from './Reactor';
-import { ComponentBrand } from './ComponentBrand';
+import { ComponentBrand } from '../const/ComponentBrand';
 
 export class ReactorStore {
   @observable

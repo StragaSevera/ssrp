@@ -1,4 +1,4 @@
-import { ComponentBrand } from '../ComponentBrand';
+import { ComponentBrand } from '../../const/ComponentBrand';
 import { Component } from '../Component';
 import { action } from 'mobx';
 

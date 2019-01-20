@@ -4,7 +4,7 @@ import { inject } from 'mobx-react';
 import { Stores } from '../const/Stores';
 import { ReactorStore, ReactorStoreProps } from '../planner/ReactorStore';
 import { ImageComponent, ImageSelection } from './ImageComponent';
-import { ComponentBrand, ComponentListFiltered } from '../planner/ComponentBrand';
+import { ComponentBrand, ComponentListFiltered } from '../const/ComponentBrand';
 
 interface State {
   selectedX: number;

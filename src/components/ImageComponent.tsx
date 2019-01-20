@@ -1,4 +1,4 @@
-import { ComponentBrand } from '../planner/ComponentBrand';
+import { ComponentBrand } from '../const/ComponentBrand';
 import * as React from 'react';
 import styles from './ImageComponent.module.scss';
 

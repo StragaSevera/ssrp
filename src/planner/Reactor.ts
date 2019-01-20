@@ -1,6 +1,6 @@
 import { EmptyComponent } from './components/EmptyComponent';
 import { Component } from './Component';
-import { ComponentBrand, ComponentDict } from './ComponentBrand';
+import { ComponentBrand, ComponentDict } from '../const/ComponentBrand';
 import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
