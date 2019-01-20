@@ -1,8 +1,10 @@
 {
   "name": "ssrp",
   "version": "0.1.0",
+  "homepage": "http://stragasevera.github.io/ssrp",
   "private": true,
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
     "node-sass": "^4.11.0",
@@ -14,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
