@@ -5,6 +5,7 @@ import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
 import { action, observable, runInAction } from 'mobx';
+import { ComponentTypeError, CoordsError } from './Errors';
 
 export class Reactor {
   public readonly gridRows = 6;
@@ -29,48 +30,36 @@ export class Reactor {
   }
 
   public getComponent(x: number, y: number): Component {
-    if (this.isWrongCoords(x, y)) {
-      throw new Error(`Wrong coords: ${x}, ${y}`);
-    }
+    this.ensureGoodCoords(x, y);
     return this.grid[y - 1][x - 1];
   }
 
   @action
   private setComponent(x: number, y: number, component: Component): Component {
-    if (this.isWrongCoords(x, y)) {
-      throw new Error(`Wrong coords: ${x}, ${y}`);
-    }
+    this.ensureGoodCoords(x, y);
     this.grid[y - 1][x - 1] = component;
     return component;
   }
 
-  private isWrongCoords(x: number, y: number) {
-    return x <= 0 || x > this.gridCols || y <= 0 || y > this.gridRows;
-  }
-
   public getComponentType(x: number, y: number): ComponentBrand {
-    if (this.isWrongCoords(x, y)) {
-      throw new Error(`Wrong coords: ${x}, ${y}`);
-    }
+    this.ensureGoodCoords(x, y);
     return this.getComponent(x, y).brand;
   }
 
   @action
   public setComponentClass(x: number, y: number, type: ComponentClass | ComponentBrand): Component {
-    if (this.isWrongCoords(x, y)) {
-      throw new Error(`Wrong coords: ${x}, ${y}`);
-    }
+    this.ensureGoodCoords(x, y);
     let component: Component;
     if (typeof type === 'string') {
       if (type === ComponentBrand.ReactorComponent) {
-        throw new Error('You cannot add reactor component to grid');
+        throw new ComponentTypeError('You cannot add reactor component to grid');
       }
       component = new ComponentDict[type](this, x, y);
     } else {
       // Hacky, but simple comparing type does not work
       component = new type(this, x, y);
       if (component.brand === ComponentBrand.ReactorComponent) {
-        throw new Error('You cannot add reactor component to grid');
+        throw new ComponentTypeError('You cannot add reactor component to grid');
       }
     }
 
@@ -87,6 +76,16 @@ export class Reactor {
     return neighbourCoords
       .map(c => this.getComponent(c.x, c.y))
       .filter(comp => comp.brand !== ComponentBrand.EmptyComponent);
+  }
+
+  private isWrongCoords(x: number, y: number) {
+    return x <= 0 || x > this.gridCols || y <= 0 || y > this.gridRows;
+  }
+
+  private ensureGoodCoords(x: number, y: number) {
+    if (this.isWrongCoords(x, y)) {
+      throw new CoordsError(`Wrong coords: ${x}, ${y}`);
+    }
   }
 
   private get components(): Component[] {

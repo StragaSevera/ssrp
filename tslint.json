@@ -20,6 +20,7 @@
     "object-literal-sort-keys": false,
     "trailing-comma": false,
     "jsx-no-multiline-js": false,
+    "jsx-wrap-multiline": false,
     "semicolon": [true, "always", "strict-bound-class-methods"]
   }
 }
