@@ -6,7 +6,7 @@ export class CoolantCell20k extends Component {
   public brand = ComponentBrand.CoolantCell20k;
 
   public get maxHeat(): number {
-    return 10000;
+    return 20000;
   }
 
   @action

@@ -1,14 +1,15 @@
 import { ComponentBrand } from '../../const/ComponentBrand';
-import { UraniumCell } from './abstract/UraniumCell';
+import { HeatingCell } from './abstract/HeatingCell';
+import { HeatingMaterial, Uranium } from './abstract/HeatingMaterials';
 
-export class UraniumCellDouble extends UraniumCell {
+export class UraniumCellDouble extends HeatingCell {
   public brand = ComponentBrand.UraniumCellDouble;
 
   protected get arity(): number {
     return 2;
   }
 
-  public get isReflector(): boolean {
-    return true;
+  protected get material(): HeatingMaterial {
+    return Uranium;
   }
 }

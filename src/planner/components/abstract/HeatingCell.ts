@@ -1,25 +1,25 @@
 import { ComponentBrand } from '../../../const/ComponentBrand';
 import { action, observable } from 'mobx';
 import { Component } from '../../Component';
+import { HeatingMaterial } from './HeatingMaterials';
 
 interface HeatEU {
   eu: number;
   heat: number;
 }
 
-export class UraniumCell extends Component {
+export abstract class HeatingCell extends Component {
   @observable
   public brand!: ComponentBrand;
 
-  protected get arity(): number {
-    throw new Error('Cannot get arity from an abstract cell');
-  }
+  protected abstract get arity(): number;
+  protected abstract get material(): HeatingMaterial;
 
   private getEUHeat(neighbours: Component[]): HeatEU {
     const reflectorNeighbours = neighbours.filter(n => n.isReflector);
     const pulses = 1 + reflectorNeighbours.length + Math.floor(this.arity / 2);
     return {
-      eu: 5 * this.arity * pulses,
+      eu: this.material.energyMultiplier * this.arity * pulses,
       heat: 2 * this.arity * pulses * (pulses + 1)
     };
   }
