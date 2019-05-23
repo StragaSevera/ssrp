@@ -2,5 +2,5 @@
 export class CoordsError extends Error {
 }
 
-export class ComponentTypeError extends Error {
+export class ComponentError extends Error {
 }

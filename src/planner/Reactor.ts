@@ -5,7 +5,7 @@ import { ComponentClass } from './ComponentClass';
 import { CoordsDict } from './Coords';
 import { ReactorComponent } from './components/ReactorComponent';
 import { action, observable, runInAction } from 'mobx';
-import { ComponentTypeError, CoordsError } from './Errors';
+import { ComponentError, CoordsError } from './Errors';
 
 export class Reactor {
   public readonly gridRows = 6;
@@ -52,14 +52,14 @@ export class Reactor {
     let component: Component;
     if (typeof type === 'string') {
       if (type === ComponentBrand.ReactorComponent) {
-        throw new ComponentTypeError('You cannot add reactor component to grid');
+        throw new ComponentError('You cannot add reactor component to grid');
       }
       component = new ComponentDict[type](this, x, y);
     } else {
       // Hacky, but simple comparing type does not work
       component = new type(this, x, y);
       if (component.brand === ComponentBrand.ReactorComponent) {
-        throw new ComponentTypeError('You cannot add reactor component to grid');
+        throw new ComponentError('You cannot add reactor component to grid');
       }
     }
 

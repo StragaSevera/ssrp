@@ -3,8 +3,9 @@ import { Reactor } from './Reactor';
 import { ReactorComponent } from './components/ReactorComponent';
 import { CoordsDict } from './Coords';
 import { action, observable } from 'mobx';
+import { ComponentError } from './Errors';
 
-export class Component {
+export abstract class Component {
   @observable
   public brand!: ComponentBrand;
   @observable
@@ -27,10 +28,18 @@ export class Component {
     return this.reactor.getNeighbours(this.coords.x, this.coords.y);
   }
 
+  public get isHeatable(): boolean {
+    return this.maxHeat !== 0;
+  }
+
+  public get maxHeat(): number {
+    return 0;
+  }
+
   @action
   public addNextHeat(heat: number): void {
     if (!this.isHeatable) {
-      throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
+      throw new ComponentError(`This component cannot be heated: ${this.brand.toString()}`);
     }
     this.nextHeat += heat;
   }
@@ -38,17 +47,15 @@ export class Component {
   @action
   public lowerNextHeat(heat: number): void {
     if (!this.isHeatable) {
-      throw new Error(`This component cannot be heated: ${this.brand.toString()}`);
+      throw new ComponentError(`This component cannot be heated: ${this.brand.toString()}`);
     }
     this.nextHeat -= heat;
   }
 
-  public get isHeatable(): boolean {
-    return this.maxHeat !== 0;
-  }
-
-  public get maxHeat(): number {
-    return 0;
+  @action
+  public refresh() {
+    this.currentHeat = 0;
+    this.nextHeat = 0;
   }
 
   public get heatRatio(): number {
@@ -67,17 +74,11 @@ export class Component {
     if (this.currentHeat < 0) this.currentHeat = 0;
   }
 
-  public tick(): void {}
+  public abstract tick(): void;
 
   @action
   public fullTick(): void {
     this.tick();
     this.finalizeTick();
-  }
-
-  @action
-  public refresh() {
-    this.currentHeat = 0;
-    this.nextHeat = 0;
   }
 }

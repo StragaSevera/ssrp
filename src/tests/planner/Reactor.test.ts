@@ -2,7 +2,7 @@ import { Reactor } from '../../planner/Reactor';
 import { ComponentBrand } from '../../const/ComponentBrand';
 import { UraniumCellSingle } from '../../planner/components/UraniumCellSingle';
 import { ReactorComponent } from '../../planner/components/ReactorComponent';
-import { ComponentTypeError, CoordsError } from '../../planner/Errors';
+import { ComponentError, CoordsError } from '../../planner/Errors';
 
 describe('Reactor', () => {
   let reactor: Reactor;
@@ -70,12 +70,12 @@ describe('Reactor', () => {
   it('cannot set reactor component to grid', () => {
     reactor.setComponentClass(2, 2, ComponentBrand.UraniumCellSingle);
     expect(() => reactor.setComponentClass(2, 2, ReactorComponent)).toThrowError(
-      ComponentTypeError
+      ComponentError
     );
     expect(reactor.getComponentType(2, 2)).toBe(ComponentBrand.UraniumCellSingle);
 
     expect(() => reactor.setComponentClass(2, 2, ComponentBrand.ReactorComponent)).toThrowError(
-      ComponentTypeError
+      ComponentError
     );
     expect(reactor.getComponentType(2, 2)).toBe(ComponentBrand.UraniumCellSingle);
   });
