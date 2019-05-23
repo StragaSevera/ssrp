@@ -1,12 +1,12 @@
 import { Reactor } from '../../../planner/Reactor';
-import { HeatVent } from '../../../planner/components/HeatVent';
+import { ReactorHeatVent } from '../../../planner/components/ReactorHeatVent';
 
 describe('Heat Vent', () => {
   let reactor: Reactor;
-  let component: HeatVent;
+  let component: ReactorHeatVent;
   beforeEach(() => {
     reactor = new Reactor();
-    component = reactor.setComponentClass(2, 2, HeatVent);
+    component = reactor.setComponentClass(2, 2, ReactorHeatVent);
   });
 
   describe('with energy', () => {
@@ -21,10 +21,10 @@ describe('Heat Vent', () => {
       expect(component.maxHeat).toBe(1000);
     });
 
-    it('does not change heat of reactor', () => {
+    it('lowers heat of reactor by 5', () => {
       reactor.reactorComponent.addNextHeat(100);
       component.tick();
-      expect(reactor.nextHeat).toBe(100);
+      expect(reactor.nextHeat).toBe(95);
     });
 
     it('does not emit any heat to itself', () => {
@@ -32,12 +32,12 @@ describe('Heat Vent', () => {
       expect(component.nextHeat).toBe(0);
     });
 
-    it('lowers its heat when heated by 6', () => {
+    it('lowers its heat when heated by 5', () => {
       component.addNextHeat(7);
       component.tick();
-      expect(component.nextHeat).toBe(1);
+      expect(component.nextHeat).toBe(2);
       component.finalizeTick();
-      expect(component.currentHeat).toBe(1);
+      expect(component.currentHeat).toBe(2);
     });
   });
 });
