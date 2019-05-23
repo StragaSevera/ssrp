@@ -73,5 +73,24 @@ describe('Uranium Cell (single)', () => {
       component.tick();
       expect(reactor.nextHeat).toBe(12);
     });
+
+    it('generates more heat when near two cells', () => {
+      reactor.setComponentClass(1, 2, UraniumCellSingle);
+      reactor.setComponentClass(3, 2, UraniumCellSingle);
+      component.tick();
+      expect(reactor.nextHeat).toBe(24);
+    });
+
+    it('passes more heat to neighbours when near two cells', () => {
+      reactor.setComponentClass(1, 2, UraniumCellSingle);
+      reactor.setComponentClass(3, 2, UraniumCellSingle);
+      const neighbours = [
+        reactor.setComponentClass(2, 3, CoolantCell20k),
+        reactor.setComponentClass(2, 1, CoolantCell20k)
+      ];
+      component.tick();
+      expect(reactor.nextHeat).toBe(0);
+      expect(neighbours.map(v => v.nextHeat)).toEqual([12, 12]);
+    });
   });
 });

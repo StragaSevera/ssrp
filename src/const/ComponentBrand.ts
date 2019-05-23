@@ -5,12 +5,14 @@ import { UraniumCellSingle } from '../planner/components/UraniumCellSingle';
 import { CoolantCell20k } from '../planner/components/CoolantCell20k';
 import { HeatVent } from '../planner/components/HeatVent';
 import { UraniumCellDouble } from '../planner/components/UraniumCellDouble';
+import { UraniumCellQuad } from '../planner/components/UraniumCellQuad';
 
 export enum ComponentBrand {
   EmptyComponent = 'EmptyComponent',
   ReactorComponent = 'ReactorComponent',
   UraniumCellSingle = 'UraniumCellSingle',
   UraniumCellDouble = 'UraniumCellDouble',
+  UraniumCellQuad = 'UraniumCellQuad',
   HeatVent = 'HeatVent',
   CoolantCell20k = 'CoolantCell20k'
 }
@@ -23,6 +25,7 @@ export const ComponentDict: TComponentDict = {
   [ComponentBrand.ReactorComponent]: ReactorComponent,
   [ComponentBrand.UraniumCellSingle]: UraniumCellSingle,
   [ComponentBrand.UraniumCellDouble]: UraniumCellDouble,
+  [ComponentBrand.UraniumCellQuad]: UraniumCellQuad,
   [ComponentBrand.HeatVent]: HeatVent,
   [ComponentBrand.CoolantCell20k]: CoolantCell20k
 };

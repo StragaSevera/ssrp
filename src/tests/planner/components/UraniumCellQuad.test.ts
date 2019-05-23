@@ -1,47 +1,46 @@
 import { Reactor } from '../../../planner/Reactor';
-import { UraniumCellDouble } from '../../../planner/components/UraniumCellDouble';
 import { CoolantCell20k } from '../../../planner/components/CoolantCell20k';
-import { UraniumCellSingle } from '../../../planner/components/UraniumCellSingle';
+import { UraniumCellQuad } from '../../../planner/components/UraniumCellQuad';
 
-describe('Uranium Cell (double)', () => {
+describe('Uranium Cell (quad)', () => {
   let reactor: Reactor;
-  let component: UraniumCellDouble;
+  let component: UraniumCellQuad;
   beforeEach(() => {
     reactor = new Reactor();
-    component = reactor.setComponentClass(2, 2, UraniumCellDouble) as UraniumCellDouble;
+    component = reactor.setComponentClass(2, 2, UraniumCellQuad) as UraniumCellQuad;
   });
 
   describe('with energy', () => {
     it('pulses solo to reactor energy', () => {
       component.tick();
-      expect(reactor.nextEU).toEqual(20);
+      expect(reactor.nextEU).toEqual(60);
     });
 
     it('generates more energy when near another cell', () => {
-      reactor.setComponentClass(1, 2, UraniumCellDouble);
+      reactor.setComponentClass(1, 2, UraniumCellQuad);
       component.tick();
-      expect(reactor.nextEU).toBe(30);
+      expect(reactor.nextEU).toBe(80);
     });
 
     it('generates more energy when near two cells', () => {
-      reactor.setComponentClass(1, 2, UraniumCellSingle);
-      reactor.setComponentClass(3, 2, UraniumCellSingle);
+      reactor.setComponentClass(1, 2, UraniumCellQuad);
+      reactor.setComponentClass(3, 2, UraniumCellQuad);
       component.tick();
-      expect(reactor.nextEU).toBe(40);
+      expect(reactor.nextEU).toBe(100);
     });
   });
 
   describe('with heat', () => {
     it('pulses solo to reactor heat', () => {
       component.tick();
-      expect(reactor.nextHeat).toBe(24);
+      expect(reactor.nextHeat).toBe(96);
     });
 
     it('pulses to one neighbour', () => {
       const neighbour = reactor.setComponentClass(1, 2, CoolantCell20k);
       component.tick();
       expect(reactor.nextHeat).toBe(0);
-      expect(neighbour.nextHeat).toBe(24);
+      expect(neighbour.nextHeat).toBe(96);
     });
 
     it('pulses to four neighbours', () => {
@@ -51,7 +50,7 @@ describe('Uranium Cell (double)', () => {
         reactor.setComponentClass(3, 2, CoolantCell20k),
         reactor.setComponentClass(2, 3, CoolantCell20k)
       ];
-      const neighbourHeat = [6, 6, 6, 6];
+      const neighbourHeat = [24, 24, 24, 24];
       component.tick();
       expect(reactor.nextHeat).toBe(0);
       expect(neighbours.map(v => v.nextHeat)).toEqual(neighbourHeat);
@@ -63,35 +62,35 @@ describe('Uranium Cell (double)', () => {
         reactor.setComponentClass(2, 1, CoolantCell20k),
         reactor.setComponentClass(3, 2, CoolantCell20k)
       ];
-      const neighbourHeat = [8, 8, 8];
+      const neighbourHeat = [32, 32, 32];
       component.tick();
       expect(reactor.nextHeat).toBe(0);
       expect(neighbours.map(v => v.nextHeat)).toEqual(neighbourHeat);
     });
 
     it('generates more heat when near another cell', () => {
-      reactor.setComponentClass(1, 2, UraniumCellDouble);
+      reactor.setComponentClass(1, 2, UraniumCellQuad);
       component.tick();
-      expect(reactor.nextHeat).toBe(48);
+      expect(reactor.nextHeat).toBe(160);
     });
 
     it('generates more heat when near two cells', () => {
-      reactor.setComponentClass(1, 2, UraniumCellDouble);
-      reactor.setComponentClass(3, 2, UraniumCellDouble);
+      reactor.setComponentClass(1, 2, UraniumCellQuad);
+      reactor.setComponentClass(3, 2, UraniumCellQuad);
       component.tick();
-      expect(reactor.nextHeat).toBe(80);
+      expect(reactor.nextHeat).toBe(240);
     });
 
     it('passes more heat to neighbours when near two cells', () => {
-      reactor.setComponentClass(1, 2, UraniumCellDouble);
-      reactor.setComponentClass(3, 2, UraniumCellDouble);
+      reactor.setComponentClass(1, 2, UraniumCellQuad);
+      reactor.setComponentClass(3, 2, UraniumCellQuad);
       const neighbours = [
         reactor.setComponentClass(2, 3, CoolantCell20k),
         reactor.setComponentClass(2, 1, CoolantCell20k)
       ];
       component.tick();
       expect(reactor.nextHeat).toBe(0);
-      expect(neighbours.map(v => v.nextHeat)).toEqual([40, 40]);
+      expect(neighbours.map(v => v.nextHeat)).toEqual([120, 120]);
     });
   });
 });
